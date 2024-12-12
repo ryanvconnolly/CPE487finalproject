@@ -1,1 +1,1 @@
-# CPE487finalproject
+# CPE 487 Final Project: Subway Surfers
