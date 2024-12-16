@@ -61,7 +61,6 @@ ARCHITECTURE Behavioral OF runner IS
     SIGNAL train3_y_motion : STD_LOGIC_VECTOR(10 DOWNTO 0) := "00000000110";   
     
     SIGNAL seconds : INTEGER RANGE 0 TO 59 := 0; -- Seconds counter
-    SIGNAL minutes : INTEGER RANGE 0 TO 99 := 0; -- Minutes counter
     SIGNAL stopwatch_active : STD_LOGIC := '0'; -- Controls the stopwatch
 
 BEGIN
