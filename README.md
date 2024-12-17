@@ -155,7 +155,7 @@ We used a previous project (Crossy Road) as a starting point which used lab 3 as
 
   ---
 
-  * Stopwatch Integration:
+  ##### * Stopwatch Integration:
     - Added stopwatch process and seconds signal
     - Added a frame counter to track 60 frames (1 second)
       ```
@@ -178,8 +178,12 @@ We used a previous project (Crossy Road) as a starting point which used lab 3 as
         ```
         seconds_bcd <= CONV_STD_LOGIC_VECTOR((seconds MOD 10) + (seconds / 10) * 16, 8);
         ```
+--- 
+#### 4. runner.xdc
+- Modified the pins assigned to each anode to ensure the display would print the stop watch correctly.
 
-
+#### 5. clk_wiz_0_clk_wiz.vhd
+- Adjusted MMCM PRIMITIVE instatiations to be compatible with TV
 
 
 ## Vivado Instructions
@@ -192,5 +196,49 @@ ENJOY THE GAME!!!!
 
 ## Game Play Instructions
 
+1. When the bitstream is initially uploaded to the FPGA board, the player will be able see their runner and blue train 3.
+2. Press BTNC to start the game.
+3. The trains will begin to move down the screen. The player will have to dodge the trains by using the BTNL and BTNR to move the runner left and right, respectively.
+4. If the runner collides with any of the trains, the runner "dies." To restart a new game, simply press BTNC.
+5. Player can view their game duration by looking at the 7-segment decoder on the Nexys A7 Board.
+
+6. If you get confused, watch this video: [Video Demo](https://youtube.com/shorts/e7A8Uj5hRyc?si=8Utbdiid0STbItb7)
+7. Have fun!
+
+## Summary
+##### Yash
+  - Train positioning / Logic 
+  - Runner positioning 
+##### Ryan 
+  - Major Debugging
+  - Runner logic
+  - Score/Stopwatch logic and implementation
+
+##### Timeline
+- This project was completed in a weeks time (Dec 10 - Dec 16).
+
+##### Difficulties
+1. Initial runner placement:
+   -  had trouble figuring out the initial location of the runner so it was visible to the player and we could constrain the runner to horizontal movement only.
+   -  guess and checked until it was where we wanted it.
+2. Adjusting resolution:
+   - the original specs were not compatible with the TV used
+   - had to change the values in vga_sync and clk_wiz_0_clk_wiz
+3. Starting train motion:
+   - trains starting moving automatically and kill the runner before the player was ready
+   - updated train reset logic
+4. Resetting trains:
+   - trains would bounce off the bottom and come back up -- we needed them to only come from the top and go down
+   - constrained their motion (seen in mtrain1 process)
+5. Collision detection:
+   - was not as accurate as we wanted -- trains would only kill runner if it was hit head on
+   - updated collision logic (see in mrunner process)
+6.  Stopwatch backwards:
+   - stopwatch printed digits backwards (can be seen at the end of the video demo)
+   - reassigned the pins in runner.xdc 
+
+
+
+   
 
 
