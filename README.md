@@ -87,30 +87,102 @@
 - Configures clock dividers and multipliers to produce the desired clock frequencies.
 
 
-### Modifications
+## Modifications
 We used a previous project (Crossy Road) as a starting point which used lab 3 as a basis, it shared the same logic throughout:
-##### 1. vga_top.vhd
+#### 1. vga_top.vhd
 - Changed the frog component to runner in the instantiation.
 - Removed vertical runner motion signals
 - Updated components to support changes made in runner.vhd
 - Connected seconds_bcd from runner to the leddec module for 7-segment display.
 
-##### 2. vga_sync.vhd
+#### 2. vga_sync.vhd
 - Adjusted horizontal and vertical timing to match 800x525 for a 600x480 resolution for TV compatibility with VGA display.
 
-##### 3. runner.vhd
+#### 3. runner.vhd
 - Changed the entity name from frog to runner.
+- Removed all point counter signals and added `game_active` signal.
 - Updated all instances of:
-frog → runner (e.g., frog_x → runner_x, frog_dead → runner_dead, frog_on → runner_on).
-car → train (e.g., car1_x → train1_x, car2_on → train2_on).
-- The starting position of the runner is set to the center-bottom of the screen:
-  ```runner_x <= CONV_STD_LOGIC_VECTOR(320 - (size/2), 11);
-    runner_y <= CONV_STD_LOGIC_VECTOR(440 - (size * 4), 11);```
+  - `frog` → `runner`
+  (e.g., `frog_x` → `runner_x`, `frog_dead` → `runner_dead`, `frog_on` → `runner_on`).
+  - `car` → `train`
+  (e.g., `car1_x` → `train1_x`, `car2_on` → `train2_on`).
+
+- Set the starting position of the runner to the center-bottom of the screen:
+     ```
+     runner_x <= CONV_STD_LOGIC_VECTOR(320 - (size/2), 11);
+     runner_y <= CONV_STD_LOGIC_VECTOR(440 - (size * 4), 11);
+     ```
+- Each train (`train1`, `train2`, `train3`) is initialized at specific positions on the screen:
+  - **`train1`** starts at `(240, 0)` (near the left side).
+  - **`train2`** starts at `(320, 0)` (centered horizontally).
+  - **`train3`** starts at `(400, 100)` (near the right side, slightly lower).
+  - Example:
+    ```
+  SIGNAL train1_x : STD_LOGIC_VECTOR(10 DOWNTO 0) := CONV_STD_LOGIC_VECTOR(240 - (train_size/2), 11);
+  SIGNAL train1_y : STD_LOGIC_VECTOR(10 DOWNTO 0) := CONV_STD_LOGIC_VECTOR(0, 11);
+  ```
+
+  
+- Allowed horizontal movement only:
+     ```
+     IF left = '1' THEN
+         runner_x <= runner_x - runner_hop; -- Move left
+     ELSIF right = '1' THEN
+         runner_x <= runner_x + runner_hop; -- Move right
+     ```
+- Updated the collision detection to check for intersections between the runner and the trains:
+   ```
+   IF ((runner_x >= train1_x - train_size AND runner_x <= train1_x + train_size) 
+    AND (runner_y >= train1_y - train_size AND runner_y <= train1_y + train_size)) OR 
+       ((runner_x >= train2_x - train_size AND runner_x <= train2_x + train_size) 
+    AND (runner_y >= train2_y - train_size AND runner_y <= train2_y + train_size)) OR
+       ((runner_x >= train3_x - train_size AND runner_x <= train3_x + train_size) 
+    AND (runner_y >= train3_y - train_size AND runner_y <= train3_y + train_size))
+   THEN
+       runner_dead <= '1';
+       game_active <= '0';
+   ```
+- Reset trains to the top of the screen when they reach the bottom:
+  ```
+  IF train1_y + train_size >= 800 THEN
+    train1_y <= CONV_STD_LOGIC_VECTOR(0, 11); -- Reset train1 to top
+  ELSIF reset = '1' THEN
+    train1_y <= CONV_STD_LOGIC_VECTOR(0, 11); -- Reset train1 on reset
+  ELSE
+    train1_y <= train1_y + train1_y_motion; -- Move train1 down
+  END IF;
+  ```
+
+  ---
+
+  * Stopwatch Integration:
+    - Added stopwatch process and seconds signal
+    - Added a frame counter to track 60 frames (1 second)
+      ```
+      frame_counter := frame_counter + 1;
+      IF frame_counter = 60 THEN
+          frame_counter := 0; -- Reset frame counter
+          seconds <= seconds + 1;
+      ```
+      
+    - Reset frame_counter and seconds when the game resets
+      ```
+      IF reset = '1' THEN
+        frame_counter := 0;
+        seconds <= 0;
+        seconds_bcd <= CONV_STD_LOGIC_VECTOR(0, 8);
+      END IF;
+      ```
+
+      - Converted seconds to Binary-Coded Decimal (BCD) for display:
+        ```
+        seconds_bcd <= CONV_STD_LOGIC_VECTOR((seconds MOD 10) + (seconds / 10) * 16, 8);
+        ```
 
 
 
 
-### Vivado Instructions
+## Vivado Instructions
 1. On your Nexys A7 board, connect the VGA port to your monitor, the USB port to your computer, and ensure that the power switch is set to "on". Adapters may be needed depending on your specific hardware.
 2. Download all projects from the GitHub repository.
 3. Create a new project in Vivado, making sure to import the proper source files and constraint files.
@@ -118,7 +190,7 @@ car → train (e.g., car1_x → train1_x, car2_on → train2_on).
 ENJOY THE GAME!!!!
 
 
-### Game Play Instructions
+## Game Play Instructions
 
 
 
