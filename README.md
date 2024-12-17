@@ -235,8 +235,8 @@ ENJOY THE GAME!!!!
    - was not as accurate as we wanted -- trains would only kill runner if it was hit head on
    - updated collision logic (see in mrunner process)
 6.  Stopwatch backwards:
-   - stopwatch printed digits backwards (can be seen at the end of the video demo)
-   - reassigned the pins in runner.xdc 
+    - stopwatch printed digits backwards (can be seen at the end of the video demo)
+    - reassigned the pins in runner.xdc 
 
 
 
