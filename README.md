@@ -20,6 +20,26 @@
 4. VGA Cable
 5. Monitor/TV with VGA input or VGA adapter
 
+## Vivado Instructions
+1. On your Nexys A7 board, connect the VGA port to your monitor, the USB port to your computer, and ensure that the power switch is set to "on". Adapters may be needed depending on your specific hardware.
+2. Download all projects from the GitHub repository.
+3. Create a new project in Vivado, making sure to import the proper source files and constraint files.
+4. Run Synthesis, Implementation, write bit stream, and then program the board. 
+ENJOY THE GAME!!!!
+
+
+## Game Play Instructions
+
+1. When the bitstream is initially uploaded to the FPGA board, the player will be able see their runner and blue train 3.
+2. Press BTNC to start the game.
+3. The trains will begin to move down the screen. The player will have to dodge the trains by using the BTNL and BTNR to move the runner left and right, respectively.
+4. If the runner collides with any of the trains, the runner "dies." To restart a new game, simply press BTNC.
+5. Player can view their game duration by looking at the 7-segment decoder on the Nexys A7 Board.
+
+6. If you get confused, watch this video: [Video Demo](https://youtube.com/shorts/e7A8Uj5hRyc?si=8Utbdiid0STbItb7)
+7. Have fun!
+
+
 ## Module Overview
 #### 1. The [vga_top.vhd](https://github.com/ryanvconnolly/CPE487finalproject/blob/main/vga_top.vhd "vga_top.vhd") module acts as the top-level module that connects all other sub-modules and controls overall functionality.
 - Instantiates the vga_sync, runner, leddec, and clk_wiz_0 modules.
@@ -185,26 +205,6 @@ We used a previous project (Crossy Road) as a starting point which used lab 3 as
 
 #### 5. clk_wiz_0_clk_wiz.vhd
 - Adjusted MMCM PRIMITIVE instatiations to be compatible with TV
-
-
-## Vivado Instructions
-1. On your Nexys A7 board, connect the VGA port to your monitor, the USB port to your computer, and ensure that the power switch is set to "on". Adapters may be needed depending on your specific hardware.
-2. Download all projects from the GitHub repository.
-3. Create a new project in Vivado, making sure to import the proper source files and constraint files.
-4. Run Synthesis, Implementation, write bit stream, and then program the board. 
-ENJOY THE GAME!!!!
-
-
-## Game Play Instructions
-
-1. When the bitstream is initially uploaded to the FPGA board, the player will be able see their runner and blue train 3.
-2. Press BTNC to start the game.
-3. The trains will begin to move down the screen. The player will have to dodge the trains by using the BTNL and BTNR to move the runner left and right, respectively.
-4. If the runner collides with any of the trains, the runner "dies." To restart a new game, simply press BTNC.
-5. Player can view their game duration by looking at the 7-segment decoder on the Nexys A7 Board.
-
-6. If you get confused, watch this video: [Video Demo](https://youtube.com/shorts/e7A8Uj5hRyc?si=8Utbdiid0STbItb7)
-7. Have fun!
 
 ## Summary
 ##### Yash
