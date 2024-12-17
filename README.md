@@ -1,5 +1,5 @@
 # CPE 487 Final Project: Subway Surfers
-<img title="subway surfers" alt="Alt text" src="subway surfers.jpg" width="500" height="400">
+<img title="subway surfers" alt="Alt text" src="subway surfers.jpg" width="500" height="600">
 
 ## Expected Behavior
 
