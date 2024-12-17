@@ -2,7 +2,7 @@
 <img title="subway surfers" alt="Alt text" src="subway surfers.jpg" width="500" height="600">
 
 ## Expected Behavior
-<img title="subway surfers" alt="Alt text" src="subway surfers gif.gif">
+<img title="subway surfers" alt="Alt text" src="subway surfers gif.GIF">
 
 * Our goal in making this project is to mimic the Subway Surfers video game and have the basic mechanics:
   - Runner starts at the bottom of the screen in the center
