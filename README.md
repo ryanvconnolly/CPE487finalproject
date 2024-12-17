@@ -118,9 +118,9 @@ We used a previous project (Crossy Road) as a starting point which used lab 3 as
   - **`train3`** starts at `(400, 100)` (near the right side, slightly lower).
   - Example:
     ```
-  SIGNAL train1_x : STD_LOGIC_VECTOR(10 DOWNTO 0) := CONV_STD_LOGIC_VECTOR(240 - (train_size/2), 11);
-  SIGNAL train1_y : STD_LOGIC_VECTOR(10 DOWNTO 0) := CONV_STD_LOGIC_VECTOR(0, 11);
-  ```
+    SIGNAL train1_x : STD_LOGIC_VECTOR(10 DOWNTO 0) := CONV_STD_LOGIC_VECTOR(240 - (train_size/2), 11);
+    SIGNAL train1_y : STD_LOGIC_VECTOR(10 DOWNTO 0) := CONV_STD_LOGIC_VECTOR(0, 11);
+    ```
 
   
 - Allowed horizontal movement only:
